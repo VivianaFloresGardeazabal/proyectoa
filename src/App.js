@@ -1,36 +1,19 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import PersonaList from "./components/PersonaList";
-import CreatePersona from "./components/CreatePersona";
-import Login from "./components/Login";
-import { getToken } from "./util/auth";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Clientes from "./pages/Clientes";
+import Habitaciones from "./pages/Habitaciones";
+import Personas from "./pages/Personas";
 
-function App() {
-  const token = getToken();
-
+export default function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Ruta de inicio */}
-        <Route path="/" element={token ? <Navigate to="/personas" /> : <Login />} />
-
-        {/* Ruta protegida: listado de personas */}
-        <Route
-          path="/personas"
-          element={token ? <PersonaList /> : <Navigate to="/" />}
-        />
-
-        {/* Ruta protegida: creación de persona */}
-        <Route
-          path="/personas/create"
-          element={token ? <CreatePersona /> : <Navigate to="/" />}
-        />
-
-        {/* Ruta fallback: redirige a inicio si no se encuentra la ruta */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/clientes" element={<Clientes />} />
+      <Route path="/habitaciones" element={<Habitaciones />} />
+      <Route path="/personas" element={<Personas />} />
+      <Route path="*" element={<Navigate to="/dashboard" />} />
+    </Routes>
   );
 }
-
-export default App;
